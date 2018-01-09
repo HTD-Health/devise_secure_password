@@ -39,4 +39,11 @@ describe Devise::Models::PasswordValidatable do
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.password_format')]
     expect{ user.save! }.to raise_error ActiveRecord::RecordInvalid
   end
+
+  it 'should save user with valid password' do
+    user = build(:user, password: 'Password!1')
+
+    expect(user.valid?).to be true
+    expect{ user.save }.to change { User.count }.by 1
+  end
 end
