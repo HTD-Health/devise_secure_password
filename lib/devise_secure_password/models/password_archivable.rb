@@ -16,8 +16,8 @@ module Devise
       end
 
       def password_archive_included?
-        if self.class.password_archiving_count.is_a?(Integer) && self.class.password_archiving_count > 0
-          old_passwords_including_current_change = self.old_passwords.order(id: :desc).limit(self.class.password_archiving_count).to_a
+        if password_archiving_count.is_a?(Integer) && password_archiving_count > 0
+          old_passwords_including_current_change = self.old_passwords.order(id: :desc).limit(password_archiving_count).to_a
           old_passwords_including_current_change << OldPassword.new(old_password_params)
           old_passwords_including_current_change.each do |old_password|
             dummy                    = self.class.new
@@ -35,13 +35,17 @@ module Devise
 
       def archive_password
         if encrypted_password_changed?
-          if self.class.password_archiving_count.is_a?(Integer) && self.class.password_archiving_count > 0
+          if password_archiving_count.is_a?(Integer) && password_archiving_count > 0
             old_passwords.create! old_password_params
-            old_passwords.order(id: :desc).offset(self.class.password_archiving_count).destroy_all
+            old_passwords.order(id: :desc).offset(password_archiving_count).destroy_all
           else
             old_passwords.destroy_all
           end
         end
+      end
+
+      def password_archiving_count
+        self.class.password_archiving_count
       end
 
       module ClassMethods
