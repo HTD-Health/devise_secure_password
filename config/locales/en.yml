@@ -3,3 +3,5 @@ en:
     messages:
       password_format: "must contain big, small letters, digits and special character."
       taken_in_past: "was used previously."
+      commonly_used: "is very popular. Please choose something harder to guess."
+      email_as_password: "is very similar to your email. Please choose something harder to guess."
