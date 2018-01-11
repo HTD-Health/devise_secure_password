@@ -1,6 +1,6 @@
 describe Devise::Models::PasswordArchivable do
   before do
-    Devise.password_archiving_count = 3
+    Devise.password_archiving_count = 2
   end
 
   let(:set_password) do

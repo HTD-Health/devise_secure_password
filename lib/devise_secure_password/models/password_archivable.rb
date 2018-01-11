@@ -9,13 +9,15 @@ module Devise
         validate :validate_password_archive
       end
 
+      protected
+
       def validate_password_archive
         errors.add(:password, :taken_in_past) if encrypted_password_changed? and password_archive_included?
       end
 
       def password_archive_included?
-        if Integer(self.class.password_archiving_count) > 0
-          old_passwords_including_current_change = self.old_passwords.order(created_at: :desc).limit(self.class.password_archiving_count - 1).to_a
+        if self.class.password_archiving_count.is_a?(Integer) && self.class.password_archiving_count > 0
+          old_passwords_including_current_change = self.old_passwords.order(id: :desc).limit(self.class.password_archiving_count).to_a
           old_passwords_including_current_change << OldPassword.new(old_password_params)
           old_passwords_including_current_change.each do |old_password|
             dummy                    = self.class.new
@@ -33,19 +35,17 @@ module Devise
 
       def archive_password
         if encrypted_password_changed?
-          if Integer(self.class.password_archiving_count) > 0
+          if self.class.password_archiving_count.is_a?(Integer) && self.class.password_archiving_count > 0
             old_passwords.create! old_password_params
-            old_passwords.order(created_at: :desc).offset(self.class.password_archiving_count).destroy_all
+            old_passwords.order(id: :desc).offset(self.class.password_archiving_count).destroy_all
           else
             old_passwords.destroy_all
           end
         end
       end
 
-      protected
-
       module ClassMethods
-        ::Devise::Models.config(self, :password_archiving_count)
+        Devise::Models.config(self, :password_archiving_count)
       end
     end
   end
