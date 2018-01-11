@@ -1,0 +1,4 @@
+en:
+  errors:
+    messages:
+      password_format: "must contain big, small letters, digits and special character."
