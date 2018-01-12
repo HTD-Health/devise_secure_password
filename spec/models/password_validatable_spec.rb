@@ -9,7 +9,7 @@ describe Devise::Models::PasswordValidatable do
   end
 
   it 'password must contain lowercase letter' do
-    user = build(:user, password: 'PASSWORD1!')
+    user = build(:user, password: 'TESTPASSWORD123!')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.password_format')]
@@ -17,7 +17,7 @@ describe Devise::Models::PasswordValidatable do
   end
 
   it 'password must contain uppercase letter' do
-    user = build(:user, password: 'password1!')
+    user = build(:user, password: 'testpassword1!')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.password_format')]
@@ -25,7 +25,7 @@ describe Devise::Models::PasswordValidatable do
   end
 
   it 'password must contain digit' do
-    user = build(:user, password: 'Password!')
+    user = build(:user, password: 'TestPassword!')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.password_format')]
@@ -33,7 +33,7 @@ describe Devise::Models::PasswordValidatable do
   end
 
   it 'password must contain special character' do
-    user = build(:user, password: 'Password1')
+    user = build(:user, password: 'TestPassword1')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.password_format')]
@@ -41,7 +41,7 @@ describe Devise::Models::PasswordValidatable do
   end
 
   it 'should save user with valid password' do
-    user = build(:user, password: 'Password!1')
+    user = build(:user, password: 'TestPassword!1')
 
     expect(user.valid?).to be true
     expect{ user.save }.to change { User.count }.by 1

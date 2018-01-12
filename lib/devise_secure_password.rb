@@ -16,5 +16,7 @@ end
 
 Devise.add_module :password_validatable, model: 'devise_secure_password/models/password_validatable'
 Devise.add_module :password_archivable, model: 'devise_secure_password/models/password_archivable'
+Devise.add_module :password_uncommonable, model: 'devise_secure_password/models/password_uncommonable'
 
 require 'devise_secure_password/models/old_password'
+require 'devise_secure_password/models/common_password'
