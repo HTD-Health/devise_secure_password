@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109151809) do
+ActiveRecord::Schema.define(version: 20180112095834) do
 
   create_table "common_passwords", force: :cascade do |t|
     t.string "password"
@@ -39,7 +39,9 @@ ActiveRecord::Schema.define(version: 20180109151809) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "password_changed_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["password_changed_at"], name: "index_users_on_password_changed_at"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

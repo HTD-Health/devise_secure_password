@@ -6,8 +6,8 @@ module Devise
       extend ActiveSupport::Concern
 
       included do
-        validate :password_not_to_be_common
-        validate :password_not_to_be_similar_to_email
+        validate :password_not_to_be_common, if: -> { password.present? }
+        validate :password_not_to_be_similar_to_email, if: -> { password.present? }
       end
 
       protected
