@@ -1,5 +1,5 @@
 # DeviseSecurePassword
-DeviseSecurePassword is a Devise extension for enchasing security.
+DeviseSecurePassword is a Devise extension for enchancing security.
 
 It is composed of 4 additional Devise modules:
 
