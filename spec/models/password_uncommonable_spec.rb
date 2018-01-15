@@ -22,13 +22,13 @@ describe Devise::Models::PasswordUncommonable do
     create(:common_password, password: 'TestPassword1!')
     create(:common_password, password: '1!TestPassword')
 
-    user = build(:user, email: 'name_surname@gmail.com', password: 'TestPassword1!')
+    user = build(:user, email: 'first_name_last_name@gmail.com', password: 'TestPassword1!')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.commonly_used')]
     expect{ user.save! }.to raise_error ActiveRecord::RecordInvalid
 
-    user = build(:user, email: 'name_surname@gmail.com', password: '1!TestPassword')
+    user = build(:user, email: 'first_name_last_name@gmail.com', password: '1!TestPassword')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.commonly_used')]
@@ -36,18 +36,16 @@ describe Devise::Models::PasswordUncommonable do
   end
 
   it 'should prohibit using password similar to email' do
-    user = build(:user, email: 'name_surname@gmail.com', password: '!Name_surname@gmail.com1')
+    user = build(:user, email: 'first_name_last_name@gmail.com', password: '!First_name_last_name@gmail.com1')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.email_as_password')]
     expect{ user.save! }.to raise_error ActiveRecord::RecordInvalid
 
-    user = build(:user, email: 'name_surname@gmail.com', password: 'Name_surname1')
+    user = build(:user, email: 'first_name_last_name@gmail.com', password: 'First_name_last_name1')
 
     expect(user.valid?).to be false
     expect(user.errors.messages[:password]).to eq [I18n.t('errors.messages.email_as_password')]
     expect{ user.save! }.to raise_error ActiveRecord::RecordInvalid
   end
-
-
 end
